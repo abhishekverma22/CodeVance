@@ -1,1 +1,41 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Roboto:ital,wght@0,100..900;1,100..900&family=Zen+Dots&display=swap");
 @import "tailwindcss";
+
+@theme {
+  --font-roboto: "Roboto", sans-serif;
+  --font-poppins: "Poppins", sans-serif;
+  --font-ZenDots: "Zen Dots", sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: #fff;
+}
+body {
+  min-height: 100vh;
+  color: white;
+  background-image: 
+    linear-gradient(to right, #000000, #2f3743),
+    repeating-linear-gradient(
+      0deg,
+      rgba(253, 172, 51, 0.171) 0px,
+      rgba(185, 182, 177, 0.08) 1px,
+      transparent 1px,
+      transparent 90px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(236, 223, 204, 0.08) 0px,
+      rgba(236, 223, 204, 0.08) 1px,
+      transparent 1px,
+      transparent 80px
+    );
+  background-blend-mode: overlay;
+  background-size: cover;
+  background-repeat: repeat;
+  background-attachment: fixed;
+  position: relative;
+  overflow-x: hidden;
+}
