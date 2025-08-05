@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 const Signup = ({ onToggleAuth }) => {
   return (
-    <section >
+    <section>
       <div className="bg-gray-900 bg-opacity-40 rounded-2xl shadow-2xl overflow-hidden p-8 backdrop-blur-lg border border-gray-700 border-opacity-50 w-full max-w-xl md:mt-12 lg:mt-20">
         {/* Decorative elements */}
         <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-purple-600 opacity-30 mix-blend-overlay"></div>
@@ -120,34 +120,6 @@ const Signup = ({ onToggleAuth }) => {
               className="block text-sm font-medium text-gray-300 mb-1">
               Profession
             </label>
-            <div className="relative">
-              <select
-                id="profession"
-                name="profession"
-                className="w-full px-4 py-3 bg-gray-800 bg-opacity-60 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent appearance-none"
-                required>
-                <option value="">Select your profession</option>
-                <option value="student">Student</option>
-                <option value="developer">Developer</option>
-                <option value="designer">Designer</option>
-                <option value="manager">Manager</option>
-                <option value="other">Other</option>
-              </select>
-              <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                <svg
-                  className="h-5 w-5 text-gray-500"
-                  fill="none"
-                  viewBox="0 0 20 20"
-                  stroke="currentColor">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M7 7l3-3 3 3m0 6l-3 3-3-3"
-                  />
-                </svg>
-              </div>
-            </div>
           </motion.div>
 
           <motion.div
