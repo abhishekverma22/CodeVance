@@ -6,18 +6,11 @@
   --font-poppins: "Poppins", sans-serif;
   --font-ZenDots: "Zen Dots", sans-serif;
 }
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  color: #fff;
-}
+/* 
 body {
   min-height: 100vh;
   color: white;
-  background-image: 
-    linear-gradient(to right, #000000, #2f3743),
+  background-image: linear-gradient(to right, #000000, #2f3743),
     repeating-linear-gradient(
       0deg,
       rgba(253, 172, 51, 0.171) 0px,
@@ -38,4 +31,4 @@ body {
   background-attachment: fixed;
   position: relative;
   overflow-x: hidden;
-}
+} */
