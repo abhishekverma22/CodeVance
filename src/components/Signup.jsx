@@ -114,17 +114,6 @@ const Signup = ({ onToggleAuth }) => {
           <motion.div
             initial={{ x: -10, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 0.5 }}>
-            <label
-              htmlFor="profession"
-              className="block text-sm font-medium text-gray-300 mb-1">
-              Profession
-            </label>
-          </motion.div>
-
-          <motion.div
-            initial={{ x: -10, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.6 }}>
             <label
               htmlFor="password"
