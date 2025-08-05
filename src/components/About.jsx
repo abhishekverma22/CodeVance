@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useRef } from "react";
-import lakshman from "../assets/lakshman.png";
+import lakshman from "../assets/lakshman.jpg";
 import abhishek from "../assets/abhishek.jpg";
 
 const AboutSection = () => {
