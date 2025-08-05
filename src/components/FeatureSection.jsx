@@ -48,7 +48,7 @@ const FeaturesSection = () => {
 
   return (
     <section
-      className="relative py-20 px-4 sm:px-6 lg:px-8"
+      className="relative py-50 px-4 sm:px-6 lg:px-8 "
       style={{
         backgroundImage: `
           linear-gradient(to right, #000000, #2f3743),
