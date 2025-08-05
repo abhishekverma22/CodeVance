@@ -2,6 +2,146 @@ import { motion } from "framer-motion";
 import { MdOutlineArrowRightAlt } from "react-icons/md";
 
 const HeroSection = () => {
+  // Abstract shape components with movement
+  const MovingShape = ({ 
+    size, 
+    left, 
+    top, 
+    color, 
+    blur, 
+    delay, 
+    rotate, 
+    borderRadius,
+    path
+  }) => (
+    <motion.div
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ 
+        opacity: [0, 0.8, 0.8, 0],
+        scale: [0, 1, 1, 0],
+        x: path.map(p => p.x),
+        y: path.map(p => p.y),
+        rotate: rotate
+      }}
+      transition={{ 
+        duration: 15 + Math.random() * 10,
+        repeat: Infinity,
+        repeatType: "loop",
+        ease: "linear",
+        delay
+      }}
+      className="absolute"
+      style={{
+        width: `${size}px`,
+        height: `${size}px`,
+        left: `${left}%`,
+        top: `${top}%`,
+        background: color,
+        filter: `blur(${blur}px)`,
+        borderRadius: borderRadius,
+      }}
+    />
+  );
+
+  // Path generators for different movement patterns
+  const circularPath = (radius = 50) => {
+    const points = [];
+    for (let i = 0; i <= 360; i += 30) {
+      const angle = (i * Math.PI) / 180;
+      points.push({
+        x: radius * Math.cos(angle),
+        y: radius * Math.sin(angle)
+      });
+    }
+    return points;
+  };
+
+  const wavePath = (amplitude = 40) => {
+    const points = [];
+    for (let i = 0; i <= 360; i += 30) {
+      points.push({
+        x: i / 3.6, // Convert degrees to percentage
+        y: amplitude * Math.sin((i * Math.PI) / 180)
+      });
+    }
+    return points;
+  };
+
+  const randomPath = () => {
+    return [
+      { x: 0, y: 0 },
+      { x: Math.random() * 100 - 50, y: Math.random() * 100 - 50 },
+      { x: Math.random() * 100 - 50, y: Math.random() * 100 - 50 },
+      { x: 0, y: 0 }
+    ];
+  };
+
+  // Shape definitions
+  const shapes = [
+    // Circular moving shapes
+    {
+      type: "circle",
+      size: 120,
+      left: 10,
+      top: 20,
+      color: "rgba(98, 111, 71, 0.3)",
+      blur: 40,
+      delay: 0.2,
+      rotate: [0, 360],
+      borderRadius: "50%",
+      path: circularPath(30)
+    },
+    {
+      type: "blob",
+      size: 180,
+      left: 70,
+      top: 10,
+      color: "rgba(180, 235, 230, 0.2)",
+      blur: 35,
+      delay: 0.5,
+      rotate: [-20, 340],
+      borderRadius: "30% 70% 70% 30% / 30% 30% 70% 70%",
+      path: wavePath(30)
+    },
+    {
+      type: "triangle",
+      size: 100,
+      left: 85,
+      top: 65,
+      color: "rgba(244, 231, 225, 0.15)",
+      blur: 30,
+      delay: 0.7,
+      rotate: [15, 375],
+      borderRadius: "50% 50% 50% 50% / 60% 60% 40% 40%",
+      path: circularPath(40)
+    },
+    // Additional shapes
+    {
+      type: "square",
+      size: 80,
+      left: 30,
+      top: 70,
+      color: "rgba(180, 235, 230, 0.15)",
+      blur: 25,
+      delay: 0.3,
+      rotate: [45, 405],
+      borderRadius: "10%",
+      path: randomPath()
+    },
+    {
+      type: "abstract",
+      size: 150,
+      left: 50,
+      top: 50,
+      color: "rgba(244, 231, 225, 0.1)",
+      blur: 50,
+      delay: 0.6,
+      rotate: [0, 360],
+      borderRadius: "60% 40% 30% 70% / 60% 30% 70% 40%",
+      path: wavePath(20)
+    }
+  ];
+
   return (
     <section
       className="relative min-h-screen w-full overflow-x-hidden flex items-center justify-center px-4 sm:px-6 lg:px-8"
@@ -28,6 +168,23 @@ const HeroSection = () => {
         backgroundRepeat: "repeat",
         backgroundAttachment: "fixed",
       }}>
+      
+      {/* Moving shapes */}
+      {shapes.map((shape, index) => (
+        <MovingShape
+          key={index}
+          size={shape.size}
+          left={shape.left}
+          top={shape.top}
+          color={shape.color}
+          blur={shape.blur}
+          delay={shape.delay}
+          rotate={shape.rotate}
+          borderRadius={shape.borderRadius}
+          path={shape.path}
+        />
+      ))}
+
       {/* Content container */}
       <div className="relative z-10 text-center w-full max-w-7xl mx-auto py-20 md:py-32">
         <motion.h1
@@ -65,7 +222,7 @@ const HeroSection = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 1.5, delay: 1.2 }}
           className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center">
-          <button className="px-6 sm:px-8 py-2.5 sm:py-3.5 bg-white/50 text-black hover:bg-gray-100 rounded-full text-sm sm:text-base md:text-lg font-medium transition-all duration-300 active:scale-95 cursor-pointer w-full sm:w-auto max-w-xs sm:max-w-none">
+          <button className="px-6 sm:px-8 py-2.5 sm:py-3.5 bg-white text-black hover:bg-cyan-900 hover:text-white rounded-full text-sm sm:text-base md:text-lg font-medium transition-all duration-300 active:scale-95 cursor-pointer w-full sm:w-auto max-w-xs sm:max-w-none">
             Get Started
           </button>
           <button className="px-6 sm:px-8 py-2.5 sm:py-3.5 text-white bg-white/10 rounded-full text-sm sm:text-base md:text-lg font-medium transition-all duration-300 active:scale-95 border border-white/20 cursor-pointer flex items-center justify-center gap-2 w-full sm:w-auto max-w-xs sm:max-w-none">
