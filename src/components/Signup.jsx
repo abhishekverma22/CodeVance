@@ -1,9 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
+import toast from "react-hot-toast";
+import axiosInstance from "../config/axiosInstance";
 
 const Signup = ({ onToggleAuth }) => {
+  const [signupDetails, setSignupDetails] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  function handleUserInput(e) {
+    const { name, value } = e.target;
+    setSignupDetails({ ...signupDetails, [name]: value });
+  }
+
+  async function onFormSubmit(e) {
+    e.preventDefault();
+    if (
+      !signupDetails.firstName ||
+      !signupDetails.lastName ||
+      !signupDetails.email ||
+      !signupDetails.password ||
+      !signupDetails.confirmPassword
+    ) {
+      toast.error("All fields are required");
+      return;
+    }
+    toast.promise(axiosInstance.post("/auth/signup", signupDetails), {
+      loading: "Signing up...",
+      success: (data) => {
+        onToggleAuth();
+        return data.data;
+      },
+      error: (err) => {
+        return err.response.data;
+      },
+    });
+  }
   return (
-    <section >
+    <section>
       <div className="bg-gray-900 bg-opacity-40 rounded-2xl shadow-2xl overflow-hidden p-8 backdrop-blur-lg border border-gray-700 border-opacity-50 w-full max-w-xl md:mt-12 lg:mt-20">
         {/* Decorative elements */}
         <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-purple-600 opacity-30 mix-blend-overlay"></div>
@@ -13,7 +51,8 @@ const Signup = ({ onToggleAuth }) => {
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="text-center mb-8">
+          className="text-center mb-8"
+        >
           <div className="flex justify-center mb-4">
             <div className="w-16 h-16 rounded-full bg-indigo-600 bg-opacity-20 flex items-center justify-center border border-indigo-500 border-opacity-30">
               <svg
@@ -21,7 +60,8 @@ const Signup = ({ onToggleAuth }) => {
                 className="h-8 w-8 text-indigo-400"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke="currentColor">
+                stroke="currentColor"
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -40,38 +80,46 @@ const Signup = ({ onToggleAuth }) => {
             <motion.div
               initial={{ x: -10, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
-              transition={{ delay: 0.3 }}>
+              transition={{ delay: 0.3 }}
+            >
               <label
                 htmlFor="firstName"
-                className="block text-sm font-medium text-gray-300 mb-1">
+                className="block text-sm font-medium text-gray-300 mb-1"
+              >
                 First Name
               </label>
               <input
                 id="firstName"
                 name="firstName"
                 type="text"
+                value={signupDetails.firstName}
                 required
                 className="w-full px-4 py-3 bg-gray-800 bg-opacity-60 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 placeholder="John"
+                onChange={handleUserInput}
               />
             </motion.div>
 
             <motion.div
               initial={{ x: 10, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
-              transition={{ delay: 0.3 }}>
+              transition={{ delay: 0.3 }}
+            >
               <label
                 htmlFor="lastName"
-                className="block text-sm font-medium text-gray-300 mb-1">
+                className="block text-sm font-medium text-gray-300 mb-1"
+              >
                 Last Name
               </label>
               <input
                 id="lastName"
                 name="lastName"
                 type="text"
+                value={signupDetails.lastName}
                 required
                 className="w-full px-4 py-3 bg-gray-800 bg-opacity-60 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 placeholder="Doe"
+                onChange={handleUserInput}
               />
             </motion.div>
           </div>
@@ -79,10 +127,12 @@ const Signup = ({ onToggleAuth }) => {
           <motion.div
             initial={{ x: -10, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 0.4 }}>
+            transition={{ delay: 0.4 }}
+          >
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-300 mb-1">
+              className="block text-sm font-medium text-gray-300 mb-1"
+            >
               Email Address
             </label>
             <div className="relative">
@@ -90,16 +140,19 @@ const Signup = ({ onToggleAuth }) => {
                 id="email"
                 name="email"
                 type="email"
+                value={signupDetails.email}
                 required
                 className="w-full px-4 py-3 bg-gray-800 bg-opacity-60 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 placeholder="you@example.com"
+                onChange={handleUserInput}
               />
               <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                 <svg
                   className="h-5 w-5 text-gray-500"
                   fill="none"
                   viewBox="0 0 24 24"
-                  stroke="currentColor">
+                  stroke="currentColor"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -114,49 +167,12 @@ const Signup = ({ onToggleAuth }) => {
           <motion.div
             initial={{ x: -10, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 0.5 }}>
-            <label
-              htmlFor="profession"
-              className="block text-sm font-medium text-gray-300 mb-1">
-              Profession
-            </label>
-            <div className="relative">
-              <select
-                id="profession"
-                name="profession"
-                className="w-full px-4 py-3 bg-gray-800 bg-opacity-60 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent appearance-none"
-                required>
-                <option value="">Select your profession</option>
-                <option value="student">Student</option>
-                <option value="developer">Developer</option>
-                <option value="designer">Designer</option>
-                <option value="manager">Manager</option>
-                <option value="other">Other</option>
-              </select>
-              <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                <svg
-                  className="h-5 w-5 text-gray-500"
-                  fill="none"
-                  viewBox="0 0 20 20"
-                  stroke="currentColor">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M7 7l3-3 3 3m0 6l-3 3-3-3"
-                  />
-                </svg>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ x: -10, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 0.6 }}>
+            transition={{ delay: 0.6 }}
+          >
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-300 mb-1">
+              className="block text-sm font-medium text-gray-300 mb-1"
+            >
               Password
             </label>
             <div className="relative">
@@ -164,16 +180,19 @@ const Signup = ({ onToggleAuth }) => {
                 id="password"
                 name="password"
                 type="password"
+                value={signupDetails.password}
                 required
                 className="w-full px-4 py-3 bg-gray-800 bg-opacity-60 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 placeholder="••••••••"
+                onChange={handleUserInput}
               />
               <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                 <svg
                   className="h-5 w-5 text-gray-500"
                   fill="none"
                   viewBox="0 0 24 24"
-                  stroke="currentColor">
+                  stroke="currentColor"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -188,10 +207,12 @@ const Signup = ({ onToggleAuth }) => {
           <motion.div
             initial={{ x: -10, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 0.7 }}>
+            transition={{ delay: 0.7 }}
+          >
             <label
               htmlFor="confirmPassword"
-              className="block text-sm font-medium text-gray-300 mb-1">
+              className="block text-sm font-medium text-gray-300 mb-1"
+            >
               Confirm Password
             </label>
             <div className="relative">
@@ -199,16 +220,19 @@ const Signup = ({ onToggleAuth }) => {
                 id="confirmPassword"
                 name="confirmPassword"
                 type="password"
+                value={signupDetails.confirmPassword}
                 required
                 className="w-full px-4 py-3 bg-gray-800 bg-opacity-60 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 placeholder="••••••••"
+                onChange={handleUserInput}
               />
               <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                 <svg
                   className="h-5 w-5 text-gray-500"
                   fill="none"
                   viewBox="0 0 24 24"
-                  stroke="currentColor">
+                  stroke="currentColor"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -224,10 +248,13 @@ const Signup = ({ onToggleAuth }) => {
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.8 }}
-            className="pt-2">
+            className="pt-2"
+          >
             <button
               type="submit"
-              className="w-full py-3 px-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-medium rounded-lg shadow-lg transition-all duration-300 transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-50">
+              className="w-full py-3 px-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-medium rounded-lg shadow-lg transition-all duration-300 transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-50"
+              onClick={onFormSubmit}
+            >
               Sign Up
             </button>
           </motion.div>
@@ -237,12 +264,14 @@ const Signup = ({ onToggleAuth }) => {
           className="mt-6 text-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}>
+          transition={{ delay: 1 }}
+        >
           <p className="text-sm text-gray-400">
             Already have an account?{" "}
             <button
               onClick={onToggleAuth}
-              className="font-medium text-indigo-400 hover:text-indigo-300 transition-colors cursor-pointer">
+              className="font-medium text-indigo-400 hover:text-indigo-300 transition-colors cursor-pointer"
+            >
               Login here
             </button>
           </p>
